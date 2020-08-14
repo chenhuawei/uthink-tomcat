@@ -19,7 +19,7 @@ ENV TOMCAT_VERSION 8.5.57
 ENV TOMCAT_SHA512 720de36bb3e40a4c67bdf0137b12ae0fd733aef772d81a4b8dab00f29924ddd17ecb2a7217b9551fc0ca51bd81d1da13ad63b6694c445e5c0e42dfa7f279ede1
 
 
-RUN yum -y install shadow-utils util-linux fontconfig ttmkfdir tar
+RUN yum -y install shadow-utils util-linux fontconfig ttmkfdir tar procps-ng
 
 # add tomcat user
 RUN useradd tomcat -M -d /usr/local/tomcat -s /usr/sbin/nologin
@@ -38,6 +38,7 @@ COPY tomcat.tar.gz /usr/local/tomcat
 
 # timezone
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+ENV TZ 'Asia/Shanghai'
 
 RUN set -eux; \
 	\
