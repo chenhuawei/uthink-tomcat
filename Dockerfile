@@ -36,6 +36,9 @@ RUN ttmkfdir -e /usr/share/X11/fonts/encodings/encodings.dir
 # add tomcat
 COPY tomcat.tar.gz /usr/local/tomcat
 
+# timezone
+RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
 RUN set -eux; \
 	\
 # http://yum.baseurl.org/wiki/YumDB.html
@@ -95,8 +98,6 @@ RUN set -eux; \
 #		gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
 #	done; \
 #	gpg --batch --verify tomcat.tar.gz.asc tomcat.tar.gz; \
-	pwd;\
-	ls -l;\
 	tar -xf tomcat.tar.gz --strip-components=1; \
 	rm bin/*.bat; \
 	rm tomcat.tar.gz*; \
@@ -167,6 +168,8 @@ RUN set -e \
 	fi
 
 EXPOSE 8080
+RUN mkdir -p /logs
+RUN chown -R tomcat:tomcat /logs
 RUN chown -R tomcat:tomcat /usr/local/tomcat
 USER tomcat
 CMD ["catalina.sh", "run"]
