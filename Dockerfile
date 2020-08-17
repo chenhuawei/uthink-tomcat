@@ -22,7 +22,7 @@ ENV TOMCAT_SHA512 720de36bb3e40a4c67bdf0137b12ae0fd733aef772d81a4b8dab00f29924dd
 RUN yum -y install shadow-utils util-linux fontconfig ttmkfdir tar procps-ng
 
 # add tomcat user
-RUN useradd tomcat -M -d /usr/local/tomcat -s /usr/sbin/nologin
+#RUN useradd tomcat -M -d /usr/local/tomcat -s /usr/sbin/nologin
 
 # install fonts
 RUN mkdir -p /usr/share/fonts/chinese
@@ -170,7 +170,8 @@ RUN set -e \
 
 EXPOSE 8080
 RUN mkdir -p /logs
-RUN chown -R tomcat:tomcat /logs
-RUN chown -R tomcat:tomcat /usr/local/tomcat
-USER tomcat
+RUN chmod 777 /logs
+#RUN chown -R tomcat:tomcat /logs
+#RUN chown -R tomcat:tomcat /usr/local/tomcat
+#USER tomcat
 CMD ["catalina.sh", "run"]
